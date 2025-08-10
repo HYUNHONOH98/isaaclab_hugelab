@@ -273,7 +273,7 @@ class G1RoughPPORunnerCfg(RslRlOnPolicyRunnerCfg):
         symmetry_cfg=RslRlSymmetryCfg(
             use_data_augmentation=True,
             use_mirror_loss=True,
-            mirror_loss_coeff=10.0,
+            mirror_loss_coeff=1.0,
             data_augmentation_func=data_augmentation_func_g1,
         ),
     )

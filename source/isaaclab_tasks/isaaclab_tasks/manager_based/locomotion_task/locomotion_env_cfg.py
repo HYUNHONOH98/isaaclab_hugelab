@@ -149,8 +149,8 @@ class CurriculumCfg:
     perturbation_curriculum = CurrTerm(
         func=mdp.perturbation_curriculum, params={"status_checker": mdp.is_velocity_tracking_error_under_threshold}
     )
-    linvel_cmd_curriculum = CurrTerm(func=mdp.linvel_cmd_curriculum)
-    angvel_cmd_curriculum = CurrTerm(func=mdp.angvel_cmd_curriculum)
+    # linvel_cmd_curriculum = CurrTerm(func=mdp.linvel_cmd_curriculum)
+    # angvel_cmd_curriculum = CurrTerm(func=mdp.angvel_cmd_curriculum)
     walking_phase_curriculum = CurrTerm(func=mdp.walking_phase_curriculum)
 
 
