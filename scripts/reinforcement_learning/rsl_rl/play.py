@@ -76,15 +76,15 @@ def main():
     log_root_path = os.path.join("logs", "rsl_rl", agent_cfg.experiment_name)
     log_root_path = os.path.abspath(log_root_path)
     print(f"[INFO] Loading experiment from directory: {log_root_path}")
-    if args_cli.use_pretrained_checkpoint:
-        resume_path = get_published_pretrained_checkpoint("rsl_rl", args_cli.task)
-        if not resume_path:
-            print("[INFO] Unfortunately a pre-trained checkpoint is currently unavailable for this task.")
-            return
-    elif args_cli.checkpoint:
-        resume_path = retrieve_file_path(args_cli.checkpoint)
-    else:
-        resume_path = get_checkpoint_path(log_root_path, agent_cfg.load_run, agent_cfg.load_checkpoint)
+    # if args_cli.use_pretrained_checkpoint:
+    #     resume_path = get_published_pretrained_checkpoint("rsl_rl", args_cli.task)
+    #     if not resume_path:
+    #         print("[INFO] Unfortunately a pre-trained checkpoint is currently unavailable for this task.")
+    #         return
+    # elif args_cli.checkpoint:
+    #     resume_path = retrieve_file_path(args_cli.checkpoint)
+    # else:
+    resume_path = get_checkpoint_path(log_root_path, agent_cfg.load_run, agent_cfg.load_checkpoint)
 
     log_dir = os.path.dirname(resume_path)
 
