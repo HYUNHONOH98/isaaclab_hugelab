@@ -3,6 +3,17 @@ This is updated repo initialized from isaaclab v2.1.0.
 
 This version of isaaclab uses isaacsim 4.5.0.
 
+Main purpose is to reproduce locomotion policy for humanoid G1 which was train on isaacsim 4.2.0 (old isaaclab version) from isaacsim 4.5.0.
+
+Core changes were made on `locomotion_task` directory.
+
+There will be numpy related error when you start docker container directly - so I recommend you to check the package versions, especially versions of "numpy", "scipy", "lxml", "dex-retargeting". 
+
+For my experience, most of the dependency issues were solved when I lower the numpy version and lxml version. (+ remove dex-retargeting)
+
+`python -m pip install --no-cache-dir 'lxml<5.0.0' 'numpy==1.26.4'`
+`python -m pip uninstall -y dex-retargeting`
+
 # Original
 
 ![Isaac Lab](docs/source/_static/isaaclab.jpg)
