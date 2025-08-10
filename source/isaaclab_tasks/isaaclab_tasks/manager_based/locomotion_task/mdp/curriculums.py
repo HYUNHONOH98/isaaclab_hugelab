@@ -105,7 +105,7 @@ def delay_curriculum(
         ):
             current_max_delay += 1
 
-    max_delay_upper_bound = 0  # 6
+    max_delay_upper_bound = 6  # 6
     current_max_delay = min(max_delay_upper_bound, current_max_delay)
 
     robot_actuator = env.scene["robot"].actuators["G1"]
