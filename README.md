@@ -1,3 +1,10 @@
+# From maintainer
+This is updated repo initialized from isaaclab v2.1.0.
+
+This version of isaaclab uses isaacsim 4.5.0.
+
+# Original
+
 ![Isaac Lab](docs/source/_static/isaaclab.jpg)
 
 ---
