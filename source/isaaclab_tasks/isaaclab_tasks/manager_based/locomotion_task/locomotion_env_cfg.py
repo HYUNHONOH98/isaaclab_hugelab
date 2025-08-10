@@ -340,23 +340,23 @@ class G1LocomotionEnvCfg(ManagerBasedRLEnvCfg):
         )
 
         self.scene.robot.actuators["G1"].min_delay = 0
-        self.scene.robot.actuators["G1"].max_delay = 6
+        self.scene.robot.actuators["G1"].max_delay = 0
 
         # Domain Randomization
         self.disable_all_dr_terms_except([
-            "dr_joint_stiffness_and_damping",
-            "dr_link_mass",
-            "dr_robot_link_physics_parameters",
-            "dr_push_robot",
+            # "dr_joint_stiffness_and_damping",
+            # "dr_link_mass",
+            # "dr_robot_link_physics_parameters",
+            # "dr_push_robot",
             # "dr_hand_payload",
         ])
 
         # curriculum
-        # self.curriculum.delay_curriculum = None
-        # self.curriculum.perturbation_curriculum = None
+        self.curriculum.delay_curriculum = None
+        self.curriculum.perturbation_curriculum = None
 
         # Observation noise
-        self.observations.policy.enable_corruption = True
+        self.observations.policy.enable_corruption = False
 
         # Asymmetric policy <> critic
         self.observations.policy.base_lin_vel = None

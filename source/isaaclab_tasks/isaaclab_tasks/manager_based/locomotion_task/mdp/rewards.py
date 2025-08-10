@@ -1142,7 +1142,7 @@ class G1LocomotionRewards:
         weight=-50.0,
         params={
             # "asset_cfg": SceneEntityCfg("robot", body_names="torso_link"),
-            "target_height": 0.79,
+            "target_height": 0.785,
         },
     )
 
