@@ -65,6 +65,7 @@ _build
 datasets
 .github/
 
-source/ros2/*/build/
-source/ros2/*/install/
-source/ros2/*/log/
+
+ws_fast_lio/
+ws_livox/
+Livox-SDK2/
