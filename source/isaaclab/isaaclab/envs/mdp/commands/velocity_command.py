@@ -226,9 +226,6 @@ class UniformVelocityCommand(CommandTerm):
             self.lidar_lin_acc_buf = torch.cat([self.lidar_lin_acc_buf, lin_acc_norm.unsqueeze(-1)], dim=-1)
             self.metrics["lidar_lin_acc"] = torch.mean(self.lidar_lin_acc_buf, dim=1)
 
-            from icecream import ic
-            ic(self.metrics["lidar_ang_acc"] )
-            ic(self.metrics["lidar_lin_acc"] )
 
             # LiDAR unit's angular, linear jerk
             if self.last_lidar_lin_acc is None or self.last_lidar_ang_acc is None:
