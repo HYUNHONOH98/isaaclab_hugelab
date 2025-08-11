@@ -140,14 +140,44 @@ def main():
     obs, _ = env.get_observations()
     timestep = 0
     # simulate environment
+
+    metric_terms = [
+        "lidar_ang_acc",
+        "lidar_lin_acc",
+        "lidar_lin_jerk",
+        "lidar_ang_jerk",
+    ]
+    final_metrics = {metric: torch.zeros(env.num_envs, device=args_cli.device) for metric in metric_terms}
+    interval = int(env.unwrapped.max_episode_length)
+    done_env_mask = torch.zeros(env.num_envs, dtype=torch.bool, device=args_cli.device)
+
     while simulation_app.is_running():
         start_time = time.time()
         # run everything in inference mode
-        with torch.inference_mode():
-            # agent stepping
-            actions = policy(obs)
-            # env stepping
-            obs, _, _, _ = env.step(actions)
+        for _ in range(interval):
+            with torch.inference_mode():
+                # agent stepping
+                actions = policy(obs)
+                # env stepping
+                obs, _, dones, extras = env.step(actions)
+            
+                done_env_ids = torch.where(dones & ~done_env_mask)[0]
+                done_env_mask[done_env_ids] = True
+                
+                for term in metric_terms:
+                    per_env_key = f"Metrics/base_velocity/per_env/{term}"
+                    if per_env_key in extras["log"]:
+                        final_metrics[term][done_env_ids] = extras["log"][per_env_key][done_env_ids]
+
+        metric_infos = {term: final_metrics[term].mean().item() for term in metric_terms}
+
+        log_string = f" \033[1m         Metrics (interval : {interval} steps)\033[0m \n"
+        log_string += f"""{'#' * 55}\n"""
+        for key, value in metric_infos.items():
+            log_string += f"""{f'{key}:':>{35}} {value:.4f} \n"""
+        
+        print(log_string)
+        
         if args_cli.video:
             timestep += 1
             # Exit the play loop after recording one video
@@ -158,6 +188,7 @@ def main():
         sleep_time = dt - (time.time() - start_time)
         if args_cli.real_time and sleep_time > 0:
             time.sleep(sleep_time)
+        break
 
     # close the simulator
     env.close()
@@ -165,6 +196,8 @@ def main():
 
 if __name__ == "__main__":
     # run the main function
-    main()
-    # close sim app
-    simulation_app.close()
+    try:
+        main()
+    except KeyboardInterrupt:
+        # close sim app
+        simulation_app.close()

@@ -352,6 +352,8 @@ class ManagerBasedRLEnv(ManagerBasedEnv, gym.Env):
         """
         # update the curriculum for environments that need a reset
         self.curriculum_manager.compute(env_ids=env_ids)
+        # -- command manager
+        info = self.command_manager.update_metrics()
         # reset the internal buffers of the scene elements
         self.scene.reset(env_ids)
         # apply events such as randomizations for environments that need a reset

@@ -116,7 +116,10 @@ class CommandTerm(ManagerTermBase):
                 self._debug_vis_handle = None
         # return success
         return True
-
+    def update_metrics(self):
+        """Update the metrics before the termination"""
+        self._update_metrics()
+    
     def reset(self, env_ids: Sequence[int] | None = None) -> dict[str, float]:
         """Reset the command generator and log metrics.
 
@@ -330,6 +333,11 @@ class CommandManager(ManagerBase):
         """
         for term in self._terms.values():
             term.set_debug_vis(debug_vis)
+
+    def update_metrics(self):
+        """Update the metrics before the termination"""
+        for term in self._terms.values():
+            term.update_metrics()
 
     def reset(self, env_ids: Sequence[int] | None = None) -> dict[str, torch.Tensor]:
         """Reset the command terms and log their metrics.

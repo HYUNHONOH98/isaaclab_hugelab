@@ -401,6 +401,23 @@ class G1LocomotionEnvCfg_PLAY(G1LocomotionEnvCfg):
         super().__post_init__()
 
         self.curriculum.delay_curriculum = None
+        self.curriculum.perturbation_curriculum = None
+        self.curriculum.walking_phase_curriculum = None
+        # Domain Randomization
+        self.disable_all_dr_terms_except([
+            # "dr_joint_stiffness_and_damping",
+            # "dr_link_mass",
+            # "dr_robot_link_physics_parameters",
+            # "dr_push_robot",
+            # "dr_hand_payload",
+        ])
+
+        self.scene.robot.actuators["G1"].min_delay = 0
+        self.scene.robot.actuators["G1"].max_delay = 0
+        self.observations.policy.enable_corruption = False
+
+
+
         self.episode_length_s = 10.0
         self.commands.base_velocity.resampling_time_range = (self.episode_length_s, self.episode_length_s)
         # make a smaller scene for play
@@ -409,7 +426,7 @@ class G1LocomotionEnvCfg_PLAY(G1LocomotionEnvCfg):
 
         # set command for play.
 
-        self.commands.base_velocity.ranges.lin_vel_x = (0.5, 0.5)
+        self.commands.base_velocity.ranges.lin_vel_x = (0.1, 0.1)
         # self.commands.base_velocity.ranges.lin_vel_y = (0.3, 0.3)
         # self.commands.base_velocity.ranges.ang_vel_z = (1., 1.)
         # self.commands.base_velocity.ranges.lin_vel_x = (0.0, 0.0)
